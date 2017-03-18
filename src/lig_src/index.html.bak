@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>lig</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <style>
+    * {
+      outline: 0;
+    }
+
+    body {
+      background: #333;
+      color: #eee;
+    }
+
+    #answer {
+      display: inline-block;
+      width: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="slot">
+    <h1>Challenge</h1>
+
+    <p>
+      Lig (pronounced [ˈliːk]; Italian: Liga di Canale) is a <input id="answer" type="text" class="form-control"> in the hills northwest of Kanal in the Littoral region of Slovenia. It lies on the border with Italy and is made up of the smaller settlements of Lig, Kostanjevica, and Strmec, as well as a few remote farmsteads in the Kanalski Kolovrat range.
+    </p>
+
+    <button class="btn btn-default" id="check">Check Answer</button>
+  </div>
+
+  <script>
+    var ans1 = 'dispersed settlement';
+
+    function hash (s, a, b, c) {
+      for (var i = 0; i < s.length; i++) {
+        var x = s.charCodeAt(i)
+        var y = x * b + c
+        var z = (a << 5) ^ (a >> 3)
+        a = z ^ y
+      }
+      return a & 0x7fffffff
+    }
+
+    function h1 (s) {
+      return hash(s, 0x13375566, 7, 9487)
+    }
+
+    function h2 (s) {
+      return hash(s, 0xc8763, 259, 0xbadc0de)
+    }
+
+    function h3 (s) {
+      return hash(s, 0x999, 666)
+    }
+
+    function cipher (data, key, key2) {
+      var buff = new Uint8Array(new ArrayBuffer(data.length))
+
+      for (var i = 0; i < data.length; i++) {
+        key = ((key * 0xc8763) >> 3) & 0x7fffffff
+        key2 = ((key2 * 0x9487) >> 2) & 0x7fffffff
+
+        var x = data.charCodeAt(i)
+        x ^= key >> 2
+        x ^= key2 >> 3
+        buff[i] = x & 0xff
+      }
+
+      return String.fromCharCode.apply(null, buff);
+    }
+
+    function strip_spaces (s) {
+      return s.replace(/^\s+|\s+$/g, '')
+    }
+
+    check.onclick = function () {
+      var ans = strip_spaces(answer.value)
+
+      if (h1(ans) !== 1037712222) {
+        alert('Wrong answer')
+        return
+      }
+
+      var key = h2(ans)
+      var key2 = h3(ans)
+      var encrypted = atob("CvSDXlgqW4FMUT7Fph6Rmegt7AlXOa/FvCPA8OwVIR6YZUvinQ7mjf8mKpY0fiQtgAqYwYLuOdD57fPW")
+      var decrypted = cipher(encrypted, key, key2)
+
+      slot.innerHTML = '<h1>' + decrypted + '</h1>'
+    }
+  </script>
+</body>
+</html>
