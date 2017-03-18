@@ -21,3 +21,7 @@ sqlmap blind boolean-based SQL injection 攻擊流量記錄，binary search 分�
 ## lug
 
 upx 包裝的 ELF 執行檔，有 linux 環境就可以拿到 flag，東西會寫到 `/tmp/.flag`，也可以 gdb 後 break 在 syscall 然後 dump memory
+
+## adr\_challs
+
+這些是 Adr 出的題目，不過我也都解完了，順手留個解答
