@@ -3,7 +3,7 @@ from z3 import *
 flag = [ Int('f%d' % i) for i in range(84) ]
 S = Solver()
 
-for line in open('leg/leg.txt'):
+for line in open('dist/leg/leg.txt'):
     S.add(eval(line))
 
 assert str(S.check()) == 'sat'
