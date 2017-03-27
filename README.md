@@ -25,3 +25,7 @@ upx 包裝的 ELF 執行檔，有 linux 環境就可以拿到 flag，東西會�
 ## adr\_challs
 
 這些是 Adr 出的題目，不過我也都解完了，順手留個解答
+
+## ncu-nos-wargame
+
+中央大學網路開源社準備的 wargame，但是 .git 沒關所以備份下來了
